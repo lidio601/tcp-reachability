@@ -16,3 +16,4 @@ coverage/
 node_modules/
 src/
 tsconfig.json
+jest.config.js
