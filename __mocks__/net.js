@@ -28,7 +28,7 @@ exports.createConnection = function (opts, mainCb) {
   this.setTimeout = function (ttl, cb) {
     if (test('timeout.error.com')) {
       console.log('detected hostname timeout.example.com! returing timeout')
-      setTimeout(() => (`host ${opts.host} is NOT reachable through mocked net module`), ttl)
+      setTimeout(() => cb(`host ${opts.host} is NOT reachable through mocked net module`), 100)
     }
   }
 
