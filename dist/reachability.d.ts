@@ -1,5 +1,10 @@
-/// <reference types="bluebird" />
+/**
+ * @author "Fabio Cigliano"
+ * @created 3/11/18
+ */
 import Promise from 'bluebird';
+import { Logger } from 'ts-log';
+export declare function setLogger(_logger: Logger): void;
 /**
  * Test TCP connection to a remote host
  * @link https://www.npmjs.com/package/test-tcp
@@ -7,6 +12,5 @@ import Promise from 'bluebird';
  * @link https://nodejs.org/api/url.html#url_class_url
  * @param {String} url
  * @param {number} ttl
- * @param {boolean} debug
  */
-export default function isReachable(url: string, ttl?: false | number, debug?: boolean): Promise<boolean>;
+export default function isReachable(url: string, ttl?: false | number): Promise<boolean>;

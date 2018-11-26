@@ -11,7 +11,12 @@ const lodash_1 = __importDefault(require("lodash"));
 const bluebird_1 = __importDefault(require("bluebird"));
 const net_1 = __importDefault(require("net"));
 const url_1 = __importDefault(require("url"));
-const log = console.log;
+const ts_log_1 = require("ts-log");
+let logger = ts_log_1.dummyLogger;
+function setLogger(_logger) {
+    logger = _logger;
+}
+exports.setLogger = setLogger;
 /**
  * Test TCP connection to a remote host
  * @link https://www.npmjs.com/package/test-tcp
@@ -19,44 +24,42 @@ const log = console.log;
  * @link https://nodejs.org/api/url.html#url_class_url
  * @param {String} url
  * @param {number} ttl
- * @param {boolean} debug
  */
-function isReachable(url, ttl, debug) {
+function isReachable(url, ttl) {
     return new bluebird_1.default((resolve, reject) => {
         try {
-            ttl;
             let dataReceived;
             if (!lodash_1.default.startsWith(url, 'http')) {
                 url = 'http://' + url;
             }
             const parsed = url_1.default.parse(url);
-            debug && log('connecting to', parsed);
+            logger.debug('connecting to', parsed);
             const hostname = lodash_1.default.get(parsed, 'hostname');
             var socket = net_1.default.createConnection({
                 host: hostname,
                 port: lodash_1.default.toInteger(parsed.port) || 80
             }, function () {
-                debug && log(`connected to server ${hostname}`);
+                logger.info(`connected to server ${hostname}`);
                 dataReceived = true;
                 socket.end();
             });
             socket.setTimeout(ttl || 10000, () => {
-                debug && log(`socket timeout for host ${hostname}`);
+                logger.warn(`socket timeout for host ${hostname}`);
                 dataReceived = false;
                 socket.destroy();
             });
             socket.on('error', err => {
-                debug && log(`connection error for host ${hostname}`, err);
+                logger.error(`connection error for host ${hostname}`, err);
                 if (dataReceived !== true) {
                     dataReceived = false;
                 }
             });
             socket.on('close', () => {
-                debug && log(`connection closed for host ${hostname}`, { dataReceived });
+                logger.trace(`connection closed for host ${hostname}`, { dataReceived });
                 resolve(dataReceived);
             });
             socket.on('data', data => {
-                debug && log(`data received from host ${hostname}`, data);
+                logger.trace(`data received from host ${hostname}`, data);
                 dataReceived = true;
                 socket.end();
             });

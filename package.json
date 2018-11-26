@@ -1,11 +1,12 @@
 {
   "name": "tcp-reachability",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Test TCP reachability",
   "main": "dist/reachability.js",
   "scripts": {
     "test": "npx jest",
-    "build": "npx tsc"
+    "build": "npx tsc",
+    "publish": "increase-version --package-json=./package.json && git add ."
   },
   "repository": {
     "type": "git",
@@ -32,10 +33,18 @@
     "@types/jest": "^23.3.9",
     "@types/lodash": "^4.14.118",
     "@types/node": "^10.12.10",
+    "husky": "^1.2.0",
+    "increase-version": "^1.0.4",
     "jest": "^23.6.0",
     "standard": "^12.0.1",
     "ts-jest": "^23.10.4",
+    "ts-log": "^2.1.4",
     "tslib": "^1.9.3",
     "typescript": "^3.1.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npm run build && npm run publish"
+    }
   }
 }
