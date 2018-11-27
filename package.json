@@ -1,10 +1,10 @@
 {
   "name": "tcp-reachability",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Test TCP reachability",
   "main": "dist/reachability.js",
   "scripts": {
-    "test": "npx jest",
+    "test": "snyk test && npx jest",
     "build": "npx tsc",
     "publish": "increase-version --package-json=./package.json && git add ."
   },
@@ -40,7 +40,8 @@
     "ts-jest": "^23.10.4",
     "ts-log": "^2.1.4",
     "tslib": "^1.9.3",
-    "typescript": "^3.1.6"
+    "typescript": "^3.1.6",
+    "snyk": "^1.90.0"
   },
   "husky": {
     "hooks": {
