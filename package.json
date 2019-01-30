@@ -1,6 +1,6 @@
 {
   "name": "tcp-reachability",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Test TCP reachability",
   "main": "dist/reachability.js",
   "scripts": {
@@ -44,7 +44,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test && npm run build && npm run publish"
+      "pre-commit": "npm test && npm run build && npm publish"
     }
   }
 }
